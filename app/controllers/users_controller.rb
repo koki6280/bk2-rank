@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@books = @user.books
 		@book = Book.new
+		impressionist(@user, nil, unique: [:session_hash])
 	end
 
 	def edit
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
     end
 
 	def index
-		@users = User.all
+		@users = User.order(impressions_count: 'DESC')
 		@user = current_user
 		@book = Book.new
 	end
